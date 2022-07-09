@@ -20,6 +20,7 @@ const carrito = [];
 
 
 
+
 // creamos las card
 function mostramosProducto() {
     const limpiarPagina = document.getElementById("contenedor");
@@ -52,7 +53,7 @@ function mostramosProducto() {
         producto.append(i.modelo);
         precio.append(i.precio);
         // conbtn.innerHTML = "conboton";
-        boton.append("comprar");
+        boton.append("Agregar Carrito");
         boton.id = i.id;
 
 
@@ -69,23 +70,25 @@ function mostramosProducto() {
             const productoComprado = productos.find(producto => producto.id == boton.id);
             //  alert(productoComprado.id + " " + productoComprado.modelo + " $" + productoComprado.precio);        
             carrito.push(productoComprado);
-
+            jsonCargar()
         }
     }
+
+
+
     // creamos boton carrito
     const botonCarrito = document.getElementById("botonCarrito");
-    botonCarrito.innerHTML = "<button>Carrito</button>";
+    botonCarrito.innerHTML = "<button>Ver Carrito</button>";
     // creamos eventos 
     botonCarrito.addEventListener("click", mostrarCarrito)
 }
 
+jsonLamar()
 mostramosProducto()
 
 // mostramos carrito cuando hace click
 function mostrarCarrito() {
     // dejar pagina limpia
-    // const limpiarPagina = document.getElementById("contenedor");
-    // limpiarPagina.innerHTML = "";
     const limpiarCarrito = document.getElementById("productosCarrito");
     limpiarCarrito.innerHTML = "";
 
@@ -101,11 +104,50 @@ function mostrarCarrito() {
     })
     // // creamos boton volver
     const botonVolver = document.getElementById("contenedor");
+    const botonBorrar = document.getElementById("botonBorrar");
     botonVolver.innerHTML = "<button>Volver</button>";
+    botonBorrar.innerHTML = "<button>BorrarCarrito</button>";
     // creamos eventos 
     botonVolver.addEventListener("click", mostramosProducto)
+    botonBorrar.addEventListener("click", eliminarCarrito)
 
 }
+
+// eliminar storage
+function eliminarCarrito() {
+    localStorage.clear();
+}
+
+// cargar los datos del carrito localStorage en json
+function jsonCargar() {
+    // // probando localstorage: deja guardado el modelo pero si agregas otro lo pisa
+    // let carritolocal = localStorage.setItem("modelo", productoComprado.modelo)
+    // // probando sessionstorage: deja guardado el modelo, si reinicias queda igual pero si cerras la paguina se elimina 
+    // let carritosession = sessionStorage.setItem("modelo", productoComprado.modelo)
+    // json pasa a estrin un array o valor
+    let carritojson = JSON.stringify(carrito)
+    // como string lo podemos cargar en localstorage para tener todos los datos del producto o los que necesitemso
+    localStorage.setItem("modelo", carritojson)
+}
+
+// sumar al carrito los datos del localStorage
+function jsonLamar() {
+    // repuestaLocal: recibe el array en string
+    let repuestaLocal = localStorage.getItem("modelo");
+    // respuestaJson: volvemos el string a array
+    let repuestaJson = JSON.parse(repuestaLocal);
+    if (repuestaJson) {
+        // recupero el array json y lo paso al array carrito
+        repuestaJson.forEach(t => { carrito.push(t) })
+    } else {
+        // falta de agregar cosas
+        console.log("no hay");
+    }
+}
+
+
+
+
 
 // -eliminar carrito
 // -hacer setiten
