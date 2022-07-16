@@ -70,7 +70,21 @@ function mostramosProducto() {
             const productoComprado = productos.find(producto => producto.id == boton.id);
             //  alert(productoComprado.id + " " + productoComprado.modelo + " $" + productoComprado.precio);        
             carrito.push(productoComprado);
+            // cargamos al almasenamiento local
             jsonCargar()
+
+            Toastify({
+
+                text: 'AGREGASTE AL CARRITO: ' + productoComprado.modelo,
+
+                duration: 3000,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                style: {
+                    background: "linear-gradient(to right, 00054B, 00054B)",
+                },
+            }).showToast();
+
         }
     }
 
@@ -83,39 +97,69 @@ function mostramosProducto() {
     botonCarrito.addEventListener("click", mostrarCarrito)
 }
 
-jsonLamar()
+llamarStorage()
 mostramosProducto()
 
 // mostramos carrito cuando hace click
 function mostrarCarrito() {
-    // dejar pagina limpia
-    const limpiarCarrito = document.getElementById("productosCarrito");
+
+
+    // dejar pagina limpia del contenedor
+    const limpiarCarrito = document.getElementById("contenedor");
     limpiarCarrito.innerHTML = "";
+    const limpiarCarrito2 = document.getElementById("botonCarrito");
+    limpiarCarrito2.innerHTML = "";
+    const productosCarrito = document.getElementById("productosCarrito");
+    productosCarrito.innerHTML = "";
 
     carrito.forEach(producto => {
         //cremos los nodos
+
         const productoCarrito = document.createElement("h2");
         const precioCarrito = document.createElement("h2");
+
         // cargamos los nodos con el contenbido
+
         productoCarrito.append("-" + producto.modelo);
         precioCarrito.append("$" + producto.precio);
+
         // cargamos variables al id del html
         productosCarrito.append(productoCarrito, precioCarrito);
+
     })
-    // // creamos boton volver
-    const botonVolver = document.getElementById("contenedor");
-    const botonBorrar = document.getElementById("botonBorrar");
-    botonVolver.innerHTML = "<button>Volver</button>";
-    botonBorrar.innerHTML = "<button>BorrarCarrito</button>";
+
+    sumaTotal()
+
+    // creamos boton volver y borrar
+    const botonVolver2 = document.createElement("button");
+    const botonBorrar2 = document.createElement("button");
+    botonVolver2.append('volver');
+    botonBorrar2.append('borrar carrito');
+    contenedor.append(botonBorrar2, botonVolver2)
     // creamos eventos 
-    botonVolver.addEventListener("click", mostramosProducto)
-    botonBorrar.addEventListener("click", eliminarCarrito)
+    botonVolver2.addEventListener("click", mostramosProducto)
+    botonBorrar2.addEventListener("click", eliminarCarrito)
 
 }
 
 // eliminar storage
 function eliminarCarrito() {
+
+
+
     localStorage.clear();
+    //for para eliminar el carrito que es el que queda guardado
+    let a = carrito.length;
+
+    for (let i = 0; i < a; i++) {
+        carrito.pop()
+    }
+    
+
+
+    // dejar pagina limpia del contenedor
+    const productosCarrito = document.getElementById("productosCarrito");
+    productosCarrito.innerHTML = "";
 }
 
 // cargar los datos del carrito localStorage en json
@@ -131,7 +175,7 @@ function jsonCargar() {
 }
 
 // sumar al carrito los datos del localStorage
-function jsonLamar() {
+function llamarStorage() {
     // repuestaLocal: recibe el array en string
     let repuestaLocal = localStorage.getItem("modelo");
     // respuestaJson: volvemos el string a array
@@ -145,13 +189,27 @@ function jsonLamar() {
     }
 }
 
+function sumaTotal(){
+    const total = carrito.reduce((a,b) => a + b.precio, 0)
+     //cremos los nodo
+     const sumaTotal = document.createElement("h2");
+     
+     // cargamos los nodos con el contenbido
+     sumaTotal.append('El total de tu compra es: $' + total);
+     
+     // cargamos variables al id del html
+     productosCarrito.append(sumaTotal);
+}
 
+// const miCompra = [
+//     { nombre: 'Desarrollo Web', precio: 20000 },
+//     { nombre: 'Javascript', precio: 18750 },
+//     { nombre: 'ReactJS', precio: 27500 }
+// ]
 
+// const total = miCompra.reduce((acc, el) => acc + el.precio, 0)
+// console.log(total) // 66250
 
-
-// -eliminar carrito
-// -hacer setiten
-// -hacer json
 
 
 
