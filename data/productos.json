@@ -1,0 +1,8 @@
+[
+    {"id": 1, "modelo": "Microprocesador Intel Celeron", "precio": 9500, "img": "./img/Microprocesador Intel Celeron.png"},
+    {"id": 2, "modelo": "Microprocesador Intel Core I5", "precio": 22500, "img": "./img/Microprocesador Intel Core I5.png"},
+    {"id": 3, "modelo": "Microprocesador Intel Core I7", "precio": 48000, "img": "./img/Microprocesador Intel Core I7.png"},
+    {"id": 4, "modelo": "Microprocesador Intel Pentium", "precio": 11000, "img": "./img/Microprocesador Intel Pentium.png"},
+    {"id": 5, "modelo": "Microprocesador Intel Core i3", "precio": 13500, "img": "./img/Procesador Intel Core i3.png"},
+    {"id": 6, "modelo": "motherboard asus prime h510", "precio": 13000, "img": "./img/Motherboard Asus Prime H510M.png"}
+]
