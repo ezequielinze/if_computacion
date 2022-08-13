@@ -4,29 +4,12 @@ const URL = 'data/productos.json'
 
 fetch(URL)
     .then(res => res.json())
-    .then(data => { renderProducts(data) })
+    .then(data => { productos(data) })
     .catch(err => { console.log('Hubo un error: '); })
     .finally(() => { console.log('Terminó el fetch') })
 
-function renderProducts(productos) {
+function productos(productos) {
 
-    // productos.forEach(producto => {
-    //     //cremos los nodos
-
-    //     const productoCarrito = document.createElement("h2");
-    //     const precioCarrito = document.createElement("h2");
-    //     const fotoCarrito = document.createElement("img");
-
-    //     // cargamos los nodos con el contenbido
-
-    //     productoCarrito.append("-" + producto.modelo);
-    //     precioCarrito.append("$" + producto.precio);
-    //     fotoCarrito.src = producto.img;
-
-    //     // cargamos variables al id del html
-    //     productosCarrito.append(productoCarrito, precioCarrito, fotoCarrito);
-
-    // })
 
     function mostramosProducto() {
         const limpiarPagina = document.getElementById("contenedor");
@@ -34,8 +17,9 @@ function renderProducts(productos) {
         const limpiarCarrito = document.getElementById("productosCarrito");
         limpiarCarrito.innerHTML = "";
 
+        // cremos elementos
         productos.forEach(producto => {
-            // cremos elementos
+
             const card = document.createElement("div");
             const foto = document.createElement("img");
             const modelo = document.createElement("h2");
@@ -50,12 +34,10 @@ function renderProducts(productos) {
             foto.className = "foto";
             modelo.className = "producto";
             precio.className = "precio";
-            // conbtn.className = "conbtn";
             boton.className = "boton";
 
 
             // agregamos contenido
-
             card.id = producto.id;
             foto.src = producto.img;
             modelo.append(producto.modelo);
@@ -98,10 +80,12 @@ function renderProducts(productos) {
         })  //productos.forEach
 
         // creamos boton carrito
-        const botonCarrito = document.getElementById("botonCarrito");
-        botonCarrito.innerHTML = "<button>Ver Carrito</button>";
+        const btnCarrito = document.createElement("button");
+        btnCarrito.className = 'btn';
+        btnCarrito.append('Ver Carrito');
+        botonCarrito.append(btnCarrito)
         // creamos eventos 
-        botonCarrito.addEventListener("click", mostrarCarrito)
+        btnCarrito.addEventListener("click", mostrarCarrito)
 
     }// function mostramosProducto()
 
@@ -121,17 +105,16 @@ function renderProducts(productos) {
         productosCarrito.innerHTML = "";
 
         carrito.forEach(producto => {
-            //cremos los nodos
 
+            //cremos los nodos
             const productoCarrito = document.createElement("h2");
             const precioCarrito = document.createElement("h2");
 
-            // cargamos los nodos con el contenbido
-
+            // cargamos los nodos con el contenido
             productoCarrito.append("-" + producto.modelo);
             precioCarrito.append("$" + producto.precio);
 
-            // cargamos variables al id del html
+            // cargamos el dom
             productosCarrito.append(productoCarrito, precioCarrito);
 
         })
@@ -143,17 +126,24 @@ function renderProducts(productos) {
         const botonBorrar2 = document.createElement("button");
         botonVolver2.append('volver');
         botonBorrar2.append('borrar carrito');
+        botonVolver2.className = 'btn';
+        botonBorrar2.className = 'btn';
         contenedor.append(botonBorrar2, botonVolver2)
         // creamos eventos 
         botonVolver2.addEventListener("click", mostramosProducto)
         botonBorrar2.addEventListener("click", eliminarCarrito)
 
+        // boton confirmar compra
+        const confirmarCompra = document.createElement('button');
+        confirmarCompra.append('confirmar compra');
+        confirmarCompra.className = 'btn';
+        productosCarrito.append(confirmarCompra);
+        confirmarCompra.addEventListener("click", cargarDatos)
+
     }
 
     // eliminar storage
     function eliminarCarrito() {
-
-
 
         localStorage.clear();
         //for para eliminar el carrito que es el que queda guardado
@@ -163,11 +153,39 @@ function renderProducts(productos) {
             carrito.pop()
         }
 
-
-
         // dejar pagina limpia del contenedor
         const productosCarrito = document.getElementById("productosCarrito");
         productosCarrito.innerHTML = "";
+    }
+
+    function cargarDatos() {
+        productosCarrito.innerHTML = "";
+        const msj = document.createElement('h2');
+        msj.append('¡Hola! Para realizar la compra, ingresá a tu cuenta')
+        msj.className = "sumaTotal";
+        const noUsuario = document.createElement('button');
+        const siUsuario = document.createElement('button');
+        noUsuario.append('crear cuenta');
+        siUsuario.append('ingresar');
+        noUsuario.className = 'btn';
+        siUsuario.className = 'btn';
+        productosCarrito.append(msj, noUsuario, siUsuario);
+        noUsuario.addEventListener("click", ingresarCuenta)
+        siUsuario.addEventListener("click", ingresarCuenta)
+
+    }
+
+    function ingresarCuenta() {
+        productosCarrito.innerHTML = "";
+        const msj = document.createElement('h4');
+        const input = document.createElement('input');
+        const button = document.createElement('button');
+        button.className = 'btn';
+        msj.className = 'sumaTotal';
+        msj.append('Ingresá tu e‑mail o usuario')
+        button.append('continuar');
+        productosCarrito.append(msj, input, button)
+        
     }
 
     // cargar los datos del carrito localStorage en json
@@ -201,6 +219,8 @@ function renderProducts(productos) {
         const total = carrito.reduce((a, b) => a + b.precio, 0)
         //cremos los nodo
         const sumaTotal = document.createElement("h2");
+
+        sumaTotal.className = "sumaTotal";
 
         // cargamos los nodos con el contenbido
         sumaTotal.append('El total de tu compra es: $' + total);

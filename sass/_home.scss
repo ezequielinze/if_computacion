@@ -7,7 +7,7 @@ body {
     .titulo {
         color: blue;
         font-size: 50px;
-       
+
     }
 
     .contenedor {
@@ -69,12 +69,56 @@ body {
                 height: 30px;
                 background-color: rgb(91, 91, 173);
 
+
             }
 
             // }
 
+        }
 
+        .btn {
+            font-size: 16px;
+            color: beige;
+            margin: 10px;
+            border: rgb(91, 91, 173);
+            width: 150px;
+            height: 30px;
+            background-color: rgb(91, 91, 173);
+            border-radius: 10px;
+        }
 
+    }
+
+    .productosCarrito {
+        .sumaTotal {
+            color: blue;
+            font-size: 30px;
+        }
+
+        .btn {
+            font-size: 16px;
+            color: beige;
+            margin: 10px;
+            border: rgb(91, 91, 173);
+            width: 150px;
+            height: 30px;
+            background-color: rgb(91, 91, 173);
+            border-radius: 10px;
+        }
+
+    }
+
+    .botonCarrito {
+        .btn {
+            font-size: 16px;
+            color: beige;
+            margin: 10px;
+            // border: 2px solid;
+            border: rgb(91, 91, 173);
+            width: 150px;
+            height: 30px;
+            background-color: rgb(91, 91, 173);
+            border-radius: 10px;
         }
     }
 
